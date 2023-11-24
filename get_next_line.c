@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 15:46:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/24 15:47:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	get_content(t_gnl *gnl)
 	return (true);
 }
 
-char	*get_line(t_gnl *gnl)
+char	*get_lines(t_gnl *gnl)
 {
 	char	*line;
 	t_list	*tmp;
@@ -138,7 +138,7 @@ char	*get_next_line(int fd)
 	if (!get_content(&gnl))
 		return (free_all(&gnl));
 	// print_linked_list(gnl.list);
-	line = get_line(&gnl);
+	line = get_lines(&gnl);
 	if (line == NULL)
 		return (free_all(&gnl));
 	return (line);
