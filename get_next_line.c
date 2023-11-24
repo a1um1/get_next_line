@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 15:42:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/24 15:46:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,42 +125,6 @@ char	*get_line(t_gnl *gnl)
 		gnl->list->cnt[i] = '\0';
 	}
 	return (line);
-}
-
-char	*replace_new_line(char *str)
-{
-	char	*new_str;
-	int		i;
-
-	i = 0;
-	while (str[i] != '\n')
-		i++;
-	new_str = malloc(sizeof(char) * (i + 1));
-	if (new_str == NULL)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			new_str[i] = '$';
-		else
-			new_str[i] = str[i];
-		i++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-void	print_linked_list(t_list *head)
-{
-	t_list	*current;
-
-	current = head;
-	while (current != NULL)
-	{
-		printf("[%s]\n", replace_new_line(current->cnt));
-		current = current->nx;
-	}
 }
 
 char	*get_next_line(int fd)
