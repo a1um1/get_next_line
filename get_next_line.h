@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 15:11:52 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/24 20:27:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-
 
 # include <fcntl.h>
 # include <stdio.h>
@@ -38,9 +37,12 @@ struct s_gnl{
 };
 
 char		*get_next_line(int fd);
-t_list		*ft_lstnew(void);
-void		*free_all(t_gnl *gnl);
-char		*get_line(t_gnl *gnl);
+t_list		*gnl_lstnew(void);
+void		*gnl_free(t_gnl *gnl);
+char		*get_lines(t_gnl *gnl);
 char		*replace_new_line(char *str);
+char		*gnl_strchr(const char *s1, int c);
+char		*create_line(t_list *tmp);
+size_t		gnl_strcpy(char *dst, const char *src);
 
 #endif
