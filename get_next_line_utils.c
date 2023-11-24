@@ -6,12 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:45:23 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 20:18:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/24 21:30:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 void	*gnl_free(t_gnl *gnl)
 {
@@ -23,6 +22,7 @@ void	*gnl_free(t_gnl *gnl)
 		gnl->list = gnl->list->nx;
 		free(tmp);
 	}
+	gnl->list = NULL;
 	return (NULL);
 }
 

@@ -5,7 +5,7 @@
 	"editor.renderWhitespace": "all",
 	"files.trimTrailingWhitespace": true,
 	"files.insertFinalNewline": true,
-	"editor.formatOnSave": true,
+	// "editor.formatOnSave": true,
 	"editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
 	"editor.fontLigatures": true,
 	"editor.rulers": [
@@ -15,7 +15,7 @@
 	"code-eol.newlineCharacter": "¬",
 	"code-eol.returnCharacter": "¤",
 	"code-eol.crlfCharacter": "¤¬",
-	"[c]": {
-		"editor.defaultFormatter": "keyhr.42-c-format"
-	},
+	// "[c]": {
+	// 	"editor.defaultFormatter": "keyhr.42-c-format"
+	// },
 }
