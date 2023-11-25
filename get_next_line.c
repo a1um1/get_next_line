@@ -6,21 +6,21 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 13:04:30 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 13:08:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	get_content(t_gnl *gnl, int rd_bytes)
+bool	get_content(t_gnl *gnl, int rd_bytes)
 {
 	t_list	*tmp;
 
 	if (gnl->list == NULL)
 		gnl->list = gnl_lstnew();
 	if (gnl->list == NULL)
-		return (0);
+		return (false);
 	tmp = gnl->list;
 	while (tmp != NULL)
 	{
@@ -32,14 +32,14 @@ char	get_content(t_gnl *gnl, int rd_bytes)
 			tmp->cnt[rd_bytes] = '\0';
 		}
 		if (gnl_strchr(tmp->cnt, '\n') != NULL)
-			return (1);
+			return (true);
 		if (tmp->nx == NULL)
 			tmp->nx = gnl_lstnew();
 		if (tmp->nx == NULL)
-			return (0);
+			return (false);
 		tmp = tmp->nx;
 	}
-	return (1);
+	return (true);
 }
 
 char	*create_line(t_list *tmp, size_t i, size_t len)

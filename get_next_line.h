@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 13:04:49 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 13:09:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 # endif
 
 # include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
+# include <stdbool.h>
 
 typedef struct s_list	t_list;
 struct s_list {
