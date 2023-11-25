@@ -6,7 +6,7 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 12:42:02 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:50:52 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ struct s_gnl{
 char		*get_next_line(int fd);
 t_list		*gnl_lstnew(t_list *list);
 void		*gnl_free(t_gnl *gnl);
-char		*get_lines(t_gnl *gnl);
+char		*get_lines(t_gnl *gnl, size_t i, size_t len, char **line);
 char		*replace_new_line(char *str);
 char		*gnl_strchr(const char *s1, int c);
-char		*create_line(t_list *tmp);
+char		*create_line(t_list *tmp, size_t i, size_t len);
 size_t		gnl_strcpy(char *dst, const char *src);
 
 #endif

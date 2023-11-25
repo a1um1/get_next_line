@@ -6,7 +6,7 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 12:44:09 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:51:04 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,10 @@ char	get_content(t_gnl *gnl, int rd_bytes)
 	return (1);
 }
 
-char	*create_line(t_list *tmp)
+char	*create_line(t_list *tmp, size_t i, size_t len)
 {
 	char	*line;
-	size_t	i;
-	size_t	len;
 
-	len = 0;
-	i = 0;
 	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i])
 	{
 		if (tmp->cnt[++i] == '\0' && tmp->nx)
@@ -65,21 +61,16 @@ char	*create_line(t_list *tmp)
 	return (line);
 }
 
-char	*get_lines(t_gnl *gnl)
+char	*get_lines(t_gnl *gnl, size_t i, size_t len, char **line)
 {
-	char	*line;
 	t_list	*tmp;
-	size_t	i;
-	size_t	len;
 
-	line = create_line(gnl->list);
+	*line = create_line(gnl->list, 0, 0);
 	if (line == NULL)
 		return (NULL);
-	len = 0;
-	i = 0;
 	while (gnl->list && gnl->list->cnt[i] != '\n' && gnl->list->cnt[i])
 	{
-		line[len++] = gnl->list->cnt[i++];
+		(*line)[len++] = gnl->list->cnt[i++];
 		if (!gnl->list->cnt[i])
 		{
 			tmp = gnl->list;
@@ -90,7 +81,7 @@ char	*get_lines(t_gnl *gnl)
 	}
 	if (gnl->list->cnt[i] == '\n')
 		gnl_strcpy(gnl->list->cnt, gnl->list->cnt + i + 1);
-	return (line);
+	return (*line);
 }
 
 char	*get_next_line(int fd)
@@ -106,8 +97,7 @@ char	*get_next_line(int fd)
 		return (gnl_free(&gnl));
 	if (!get_content(&gnl, 0))
 		return (gnl_free(&gnl));
-	line = get_lines(&gnl);
-	if (line == NULL)
+	if (get_lines(&gnl, 0, 0, &line) == NULL)
 		return (gnl_free(&gnl));
 	return (line);
 }
