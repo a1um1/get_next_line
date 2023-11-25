@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 13:08:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 13:10:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,17 @@ char	*create_line(t_list *tmp, size_t i, size_t len)
 	return (line);
 }
 
-char	*get_lines(t_gnl *gnl, size_t i, size_t len, char **line)
+char	*get_lines(t_gnl *gnl, size_t i, size_t len)
 {
 	t_list	*tmp;
+	char	*line;
 
-	*line = create_line(gnl->list, 0, 0);
+	line = create_line(gnl->list, 0, 0);
 	if (line == NULL)
 		return (NULL);
 	while (gnl->list && gnl->list->cnt[i] != '\n' && gnl->list->cnt[i])
 	{
-		(*line)[len++] = gnl->list->cnt[i++];
+		(line)[len++] = gnl->list->cnt[i++];
 		if (!gnl->list->cnt[i])
 		{
 			tmp = gnl->list;
@@ -87,7 +88,7 @@ char	*get_lines(t_gnl *gnl, size_t i, size_t len, char **line)
 	}
 	if (gnl->list->cnt[i] == '\n')
 		gnl_strcpy(gnl->list->cnt, gnl->list->cnt + i + 1);
-	return (*line);
+	return (line);
 }
 
 char	*get_next_line(int fd)
@@ -100,7 +101,8 @@ char	*get_next_line(int fd)
 	gnl.fd = fd;
 	if (!get_content(&gnl, 0))
 		return (gnl_free(&gnl));
-	if (get_lines(&gnl, 0, 0, &line) == NULL)
+	line = get_lines(&gnl, 0, 0);
+	if (line == NULL)
 		return (gnl_free(&gnl));
 	return (line);
 }
