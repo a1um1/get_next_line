@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 21:32:43 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 12:42:02 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ struct s_gnl{
 };
 
 char		*get_next_line(int fd);
-t_list		*gnl_lstnew(void);
+t_list		*gnl_lstnew(t_list *list);
 void		*gnl_free(t_gnl *gnl);
 char		*get_lines(t_gnl *gnl);
 char		*replace_new_line(char *str);

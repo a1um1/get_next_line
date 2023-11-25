@@ -3,24 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 21:33:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 12:44:09 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	get_content(t_gnl *gnl, int rd_bytes)
 {
 	t_list	*tmp;
 
-	if (gnl->list == NULL)
-		gnl->list = gnl_lstnew();
-	if (gnl->list == NULL)
-		return (0);
 	tmp = gnl->list;
 	while (tmp != NULL)
 	{
@@ -33,8 +28,7 @@ char	get_content(t_gnl *gnl, int rd_bytes)
 		}
 		if (gnl_strchr(tmp->cnt, '\n') != NULL)
 			return (1);
-		if (tmp->nx == NULL)
-			tmp->nx = gnl_lstnew();
+		tmp->nx = gnl_lstnew(tmp->nx);
 		if (tmp->nx == NULL)
 			return (0);
 		tmp = tmp->nx;
@@ -50,7 +44,7 @@ char	*create_line(t_list *tmp)
 
 	len = 0;
 	i = 0;
-	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i] != '\0')
+	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i])
 	{
 		if (tmp->cnt[++i] == '\0' && tmp->nx)
 		{
@@ -101,12 +95,15 @@ char	*get_lines(t_gnl *gnl)
 
 char	*get_next_line(int fd)
 {
-	static t_gnl	gnl;
+	static t_gnl	gnl = {0, NULL};
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	gnl.fd = fd;
+	gnl.list = gnl_lstnew(gnl.list);
+	if (gnl.list == NULL)
+		return (gnl_free(&gnl));
 	if (!get_content(&gnl, 0))
 		return (gnl_free(&gnl));
 	line = get_lines(&gnl);
@@ -114,17 +111,3 @@ char	*get_next_line(int fd)
 		return (gnl_free(&gnl));
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	return (0);
-// }
