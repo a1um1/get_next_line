@@ -3,19 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/11/25 12:51:04 by tlakchai         ###   ########.fr       */
+=======
+/*   Updated: 2023/11/24 21:33:01 by codespace        ###   ########.fr       */
+>>>>>>> parent of 124cd69 (Fix whitespace and update get_next_line function)
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 char	get_content(t_gnl *gnl, int rd_bytes)
 {
 	t_list	*tmp;
 
+	if (gnl->list == NULL)
+		gnl->list = gnl_lstnew();
+	if (gnl->list == NULL)
+		return (0);
 	tmp = gnl->list;
 	while (tmp != NULL)
 	{
@@ -28,7 +37,8 @@ char	get_content(t_gnl *gnl, int rd_bytes)
 		}
 		if (gnl_strchr(tmp->cnt, '\n') != NULL)
 			return (1);
-		tmp->nx = gnl_lstnew(tmp->nx);
+		if (tmp->nx == NULL)
+			tmp->nx = gnl_lstnew();
 		if (tmp->nx == NULL)
 			return (0);
 		tmp = tmp->nx;
@@ -40,7 +50,13 @@ char	*create_line(t_list *tmp, size_t i, size_t len)
 {
 	char	*line;
 
+<<<<<<< HEAD
 	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i])
+=======
+	len = 0;
+	i = 0;
+	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i] != '\0')
+>>>>>>> parent of 124cd69 (Fix whitespace and update get_next_line function)
 	{
 		if (tmp->cnt[++i] == '\0' && tmp->nx)
 		{
@@ -86,18 +102,29 @@ char	*get_lines(t_gnl *gnl, size_t i, size_t len, char **line)
 
 char	*get_next_line(int fd)
 {
-	static t_gnl	gnl = {0, NULL};
+	static t_gnl	gnl;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	gnl.fd = fd;
-	gnl.list = gnl_lstnew(gnl.list);
-	if (gnl.list == NULL)
-		return (gnl_free(&gnl));
 	if (!get_content(&gnl, 0))
 		return (gnl_free(&gnl));
 	if (get_lines(&gnl, 0, 0, &line) == NULL)
 		return (gnl_free(&gnl));
 	return (line);
 }
+
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+
+// 	fd = open("test.txt", O_RDONLY);
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	return (0);
+// }

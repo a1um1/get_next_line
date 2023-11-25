@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:45:23 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 12:42:13 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/24 21:30:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,16 @@ void	*gnl_free(t_gnl *gnl)
 	return (NULL);
 }
 
-t_list	*gnl_lstnew(t_list *list)
+t_list	*gnl_lstnew(void)
 {
-	t_list	*tmp;
+	t_list	*list;
 
-	if (list != NULL)
-		return (list);
-	tmp = malloc(sizeof(t_list));
-	if (tmp == NULL)
+	list = malloc(sizeof(t_list));
+	if (list == NULL)
 		return (NULL);
-	tmp->nx = NULL;
-	tmp->cnt[0] = '\0';
-	return (tmp);
+	list->nx = NULL;
+	list->cnt[0] = '\0';
+	return (list);
 }
 
 char	*gnl_strchr(const char *s1, int c)
