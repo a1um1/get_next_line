@@ -6,11 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/11/25 12:50:52 by tlakchai         ###   ########.fr       */
-=======
-/*   Updated: 2023/11/24 21:32:43 by codespace        ###   ########.fr       */
->>>>>>> parent of 124cd69 (Fix whitespace and update get_next_line function)
+/*   Updated: 2023/11/25 13:04:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

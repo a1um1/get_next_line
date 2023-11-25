@@ -6,11 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/11/25 12:51:04 by tlakchai         ###   ########.fr       */
-=======
-/*   Updated: 2023/11/24 21:33:01 by codespace        ###   ########.fr       */
->>>>>>> parent of 124cd69 (Fix whitespace and update get_next_line function)
+/*   Updated: 2023/11/25 13:04:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +46,7 @@ char	*create_line(t_list *tmp, size_t i, size_t len)
 {
 	char	*line;
 
-<<<<<<< HEAD
 	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i])
-=======
-	len = 0;
-	i = 0;
-	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i] != '\0')
->>>>>>> parent of 124cd69 (Fix whitespace and update get_next_line function)
 	{
 		if (tmp->cnt[++i] == '\0' && tmp->nx)
 		{
