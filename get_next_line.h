@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 17:03:24 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 17:39:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ struct s_list {
 	char	cnt[BUFFER_SIZE + 1];
 	size_t	len;
 	size_t	nl;
+	size_t	ofst;
 	t_list	*nx;
 };
 
 typedef struct s_gnl	t_gnl;
 struct s_gnl{
 	int		fd;
-	t_list	*list;
+	t_list	*lst;
 };
 
 char		*get_next_line(int fd);
