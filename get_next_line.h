@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 13:10:37 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 17:03:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@
 # endif
 
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
-# include <stdbool.h>
 
 typedef struct s_list	t_list;
 struct s_list {
 	char	cnt[BUFFER_SIZE + 1];
+	size_t	len;
+	size_t	nl;
 	t_list	*nx;
 };
 
@@ -37,12 +36,14 @@ struct s_gnl{
 };
 
 char		*get_next_line(int fd);
-t_list		*gnl_lstnew(void);
-void		*gnl_free(t_gnl *gnl);
-char		*get_lines(t_gnl *gnl, size_t i, size_t len);
-char		*replace_new_line(char *str);
-char		*gnl_strchr(const char *s1, int c);
-char		*create_line(t_list *tmp, size_t i, size_t len);
+char		*get_lines(t_gnl *gnl, size_t i, size_t len, char **line);
+char		*create_line(t_list *tmp, size_t i, size_t len, char **line);
+char		get_content(t_gnl *gnl, t_list *tmp, int rd_bytes);
+
+// Utils
+t_list		*gnl_lstnew(t_list **lst);
 size_t		gnl_strcpy(char *dst, const char *src);
+char		*gnl_strchr(const char *s1, int c);
+void		*gnl_free(t_gnl *gnl);
 
 #endif

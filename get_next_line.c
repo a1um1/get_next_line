@@ -6,22 +6,14 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/25 13:10:28 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/25 16:55:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-bool	get_content(t_gnl *gnl, int rd_bytes)
+char	get_content(t_gnl *gnl, t_list *tmp, int rd_bytes)
 {
-	t_list	*tmp;
-
-	if (gnl->list == NULL)
-		gnl->list = gnl_lstnew();
-	if (gnl->list == NULL)
-		return (false);
-	tmp = gnl->list;
 	while (tmp != NULL)
 	{
 		if (tmp->cnt[0] == '\0')
@@ -31,21 +23,15 @@ bool	get_content(t_gnl *gnl, int rd_bytes)
 				return (rd_bytes == 0);
 			tmp->cnt[rd_bytes] = '\0';
 		}
-		if (gnl_strchr(tmp->cnt, '\n') != NULL)
-			return (true);
-		if (tmp->nx == NULL)
-			tmp->nx = gnl_lstnew();
-		if (tmp->nx == NULL)
-			return (false);
+		if (!gnl_lstnew(&(tmp->nx)) || gnl_strchr(tmp->cnt, '\n'))
+			return (tmp->nx != NULL);
 		tmp = tmp->nx;
 	}
-	return (true);
+	return (1);
 }
 
-char	*create_line(t_list *tmp, size_t i, size_t len)
+char	*create_line(t_list *tmp, size_t i, size_t len, char **line)
 {
-	char	*line;
-
 	while (tmp && tmp->cnt[i] != '\n' && tmp->cnt[i])
 	{
 		if (tmp->cnt[++i] == '\0' && tmp->nx)
@@ -57,27 +43,28 @@ char	*create_line(t_list *tmp, size_t i, size_t len)
 	}
 	len += i + (tmp->cnt[i] == '\n');
 	if (len == 0)
+	{
+		*line = NULL;
 		return (NULL);
-	line = malloc(sizeof(char) * (len + 1));
-	if (line == NULL)
+	}
+	*line = malloc(sizeof(char) * (len + 1));
+	if (*line == NULL)
 		return (NULL);
 	if (tmp->cnt[i] == '\n')
-		line[len - 1] = '\n';
-	line[len] = '\0';
-	return (line);
+		(*line)[len - 1] = '\n';
+	(*line)[len] = '\0';
+	return (*line);
 }
 
-char	*get_lines(t_gnl *gnl, size_t i, size_t len)
+char	*get_lines(t_gnl *gnl, size_t i, size_t len, char **line)
 {
 	t_list	*tmp;
-	char	*line;
 
-	line = create_line(gnl->list, 0, 0);
-	if (line == NULL)
+	if (create_line(gnl->list, 0, 0, line) == NULL)
 		return (NULL);
 	while (gnl->list && gnl->list->cnt[i] != '\n' && gnl->list->cnt[i])
 	{
-		(line)[len++] = gnl->list->cnt[i++];
+		(*line)[len++] = gnl->list->cnt[i++];
 		if (!gnl->list->cnt[i])
 		{
 			tmp = gnl->list;
@@ -88,21 +75,22 @@ char	*get_lines(t_gnl *gnl, size_t i, size_t len)
 	}
 	if (gnl->list->cnt[i] == '\n')
 		gnl_strcpy(gnl->list->cnt, gnl->list->cnt + i + 1);
-	return (line);
+	return (*line);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_gnl	gnl;
+	static t_gnl	gnl = {0, NULL};
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	gnl.fd = fd;
-	if (!get_content(&gnl, 0))
+	if (gnl_lstnew(&(gnl.list)) == NULL)
 		return (gnl_free(&gnl));
-	line = get_lines(&gnl, 0, 0);
-	if (line == NULL)
+	if (!get_content(&gnl, gnl.list, 0))
+		return (gnl_free(&gnl));
+	if (get_lines(&gnl, 0, 0, &line) == NULL)
 		return (gnl_free(&gnl));
 	return (line);
 }

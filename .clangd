@@ -1,2 +1,2 @@
 CompileFlags:
-  Add: [-Wunused-variable, -Werror, -Wextra]
+  Add: [-Wunused-variable, -Werror, -Wextra, -I.]
