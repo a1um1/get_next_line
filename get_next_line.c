@@ -6,7 +6,7 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 10:35:46 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:43:27 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	get_content(t_gnl *gnl, t_list *tmp, int rd_bytes, size_t i)
 
 char	*create_line(t_gnl *gnl, char **line)
 {
-	if (!gnl->line_len)
-		return (NULL);
 	*line = malloc(sizeof(char) * (gnl->line_len + 1));
 	if (*line == NULL)
 		return (NULL);
@@ -87,6 +85,8 @@ char	*get_next_line(int fd)
 	if (gnl_lstnew(&(gnl.lst)) == NULL)
 		return (gnl_free(&gnl));
 	if (!get_content(&gnl, gnl.lst, 0, 0))
+		return (gnl_free(&gnl));
+	if (!gnl.line_len)
 		return (gnl_free(&gnl));
 	if (get_lines(&gnl, 0, &line) == NULL)
 		return (gnl_free(&gnl));
