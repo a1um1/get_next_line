@@ -6,7 +6,7 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:53:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 10:46:16 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:03:22 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 typedef struct s_list	t_list;
 struct s_list {
-	char	cnt[BUFFER_SIZE + 1];
-	size_t	ofst;
-	t_list	*nx;
+	char	buffer[BUFFER_SIZE + 1];
+	size_t	idx;
+	t_list	*next;
 };
 
 typedef struct s_gnl	t_gnl;
@@ -39,7 +39,7 @@ struct s_gnl{
 char	*get_next_line(int fd);
 char	*get_lines(t_gnl *gnl, size_t len, char **line);
 char	*create_line(t_gnl *gnl, char **line);
-char	get_content(t_gnl *gnl, t_list *tmp, int rd_bytes, size_t i);
+char	get_content(t_gnl *gnl, t_list *tmp, int rd_size, size_t i);
 t_list	*gnl_lstnew(t_list **lst);
 void	*gnl_free(t_gnl *gnl);
 

@@ -6,34 +6,34 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 10:44:42 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:05:04 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	get_content(t_gnl *gnl, t_list *tmp, int rd_bytes, size_t i)
+char	get_content(t_gnl *gnl, t_list *tmp, int rd_size, size_t idx)
 {
 	while (tmp)
 	{
-		if (!tmp->cnt[tmp->ofst])
+		if (!tmp->buffer[tmp->idx])
 		{
-			rd_bytes = read(gnl->fd, tmp->cnt, BUFFER_SIZE);
-			if (rd_bytes < 1)
-				return (rd_bytes == 0);
-			tmp->cnt[rd_bytes] = '\0';
-			tmp->ofst = 0;
+			rd_size = read(gnl->fd, tmp->buffer, BUFFER_SIZE);
+			if (rd_size < 1)
+				return (rd_size == 0);
+			tmp->buffer[rd_size] = '\0';
+			tmp->idx = 0;
 		}
-		i = tmp->ofst;
-		while (tmp->cnt[i] && tmp->cnt[i] != '\n')
-			i++;
-		gnl->is_nl = tmp->cnt[i] == '\n';
-		gnl->line_len += i - tmp->ofst + gnl->is_nl;
+		idx = tmp->idx;
+		while (tmp->buffer[idx] && tmp->buffer[idx] != '\n')
+			idx++;
+		gnl->is_nl = tmp->buffer[idx] == '\n';
+		gnl->line_len += idx - tmp->idx + gnl->is_nl;
 		if (gnl->is_nl)
 			return (1);
-		if (!gnl_lstnew(&(tmp->nx)))
+		if (!gnl_lstnew(&(tmp->next)))
 			return (0);
-		tmp = tmp->nx;
+		tmp = tmp->next;
 	}
 	return (1);
 }
@@ -55,19 +55,19 @@ char	*get_lines(t_gnl *gnl, size_t len, char **line)
 
 	if (create_line(gnl, line) == NULL)
 		return (NULL);
-	while (gnl->lst && gnl->lst->cnt[gnl->lst->ofst] != '\n'
-		&& gnl->lst->cnt[gnl->lst->ofst])
+	while (gnl->lst && gnl->lst->buffer[gnl->lst->idx] != '\n'
+		&& gnl->lst->buffer[gnl->lst->idx])
 	{
-		(*line)[len++] = gnl->lst->cnt[gnl->lst->ofst++];
-		if (!(gnl->lst->cnt[gnl->lst->ofst]))
+		(*line)[len++] = gnl->lst->buffer[gnl->lst->idx++];
+		if (!(gnl->lst->buffer[gnl->lst->idx]))
 		{
 			tmp = gnl->lst;
-			gnl->lst = gnl->lst->nx;
+			gnl->lst = gnl->lst->next;
 			free(tmp);
 		}
 	}
 	if (gnl->lst && gnl->is_nl)
-		gnl->lst->ofst++;
+		gnl->lst->idx++;
 	return (*line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:45:23 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 10:35:28 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:03:22 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*gnl_free(t_gnl *gnl)
 	while (gnl->lst)
 	{
 		tmp = gnl->lst;
-		gnl->lst = gnl->lst->nx;
+		gnl->lst = gnl->lst->next;
 		free(tmp);
 	}
 	return (NULL);
@@ -34,9 +34,9 @@ t_list	*gnl_lstnew(t_list **lst)
 	list = malloc(sizeof(t_list));
 	if (list == NULL)
 		return (NULL);
-	list->nx = NULL;
-	list->cnt[0] = '\0';
-	list->ofst = 0;
+	list->next = NULL;
+	list->buffer[0] = '\0';
+	list->idx = 0;
 	*lst = list;
 	return (list);
 }
