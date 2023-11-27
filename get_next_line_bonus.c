@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 22:34:30 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/27 22:38:32 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	get_content(t_gnl *gnl, t_list *tmp, int rd_size, size_t idx)
 {
@@ -63,27 +63,27 @@ char	*get_lines(t_gnl *gnl, size_t len, char **line)
 
 char	*get_next_line(int fd)
 {
-	static t_gnl	gnl = {0, 0, 0, NULL};
+	static t_gnl	gnl[FD_MAX] = {{0, 0, 0, NULL}};
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FD_MAX)
 		return (NULL);
-	gnl.fd = fd;
-	gnl.is_nl = 0;
-	gnl.line_len = 0;
-	if (gnl_lstnew(&(gnl.lst)) == NULL)
-		return (gnl_free(&gnl));
-	if (!get_content(&gnl, gnl.lst, 0, 0))
-		return (gnl_free(&gnl));
-	if (!gnl.line_len)
-		return (gnl_free(&gnl));
-	line = malloc(sizeof(char) * (gnl.line_len + 1));
+	gnl[fd].fd = fd;
+	gnl[fd].is_nl = 0;
+	gnl[fd].line_len = 0;
+	if (gnl_lstnew(&(gnl[fd].lst)) == NULL)
+		return (gnl_free(&(gnl[fd])));
+	if (!get_content(&(gnl[fd]), gnl[fd].lst, 0, 0))
+		return (gnl_free(&(gnl[fd])));
+	if (!gnl[fd].line_len)
+		return (gnl_free(&(gnl[fd])));
+	line = malloc(sizeof(char) * (gnl[fd].line_len + 1));
 	if (line == NULL)
-		return (gnl_free(&gnl));
-	if (gnl.is_nl)
-		line[gnl.line_len - 1] = '\n';
-	line[gnl.line_len] = '\0';
-	if (get_lines(&gnl, 0, &line) == NULL)
-		return (gnl_free(&gnl));
+		return (gnl_free(&(gnl[fd])));
+	if (gnl[fd].is_nl)
+		line[gnl[fd].line_len - 1] = '\n';
+	line[gnl[fd].line_len] = '\0';
+	if (get_lines(&gnl[fd], 0, &line) == NULL)
+		return (gnl_free(&gnl[fd]));
 	return (line);
 }
