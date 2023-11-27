@@ -6,12 +6,11 @@
 /*   By: tlakchai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 09:56:34 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 10:43:27 by tlakchai         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:44:42 by tlakchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stddef.h>
 
 char	get_content(t_gnl *gnl, t_list *tmp, int rd_bytes, size_t i)
 {
